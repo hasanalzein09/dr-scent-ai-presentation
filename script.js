@@ -827,1136 +827,1030 @@ class SuccessStoriesCounter {
     }
 }
 
-// My Advanced Personal Touch Features - Professional Enhancements
+// ========================================
+// LOADING SCREEN WITH AI BRAIN ANIMATION
+// ========================================
+class LoadingScreen {
+    constructor() {
+        this.messages = [
+            "جاري تحليل احتياجاتك...",
+            "تحضير الذكاء الاصطناعي...",
+            "إعداد المساعد الذكي...",
+            "تهيئة تجربة فريدة...",
+            "تجهيز الحلول المخصصة...",
+            "تحميل قاعدة المعرفة...",
+            "إطلاق المستقبل..."
+        ];
+        this.currentMessage = 0;
+        this.progress = 0;
+        this.init();
+    }
 
-// Enhanced Loading Screen with Progress Tracking
-function initializeAdvancedLoading() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    const progressBar = document.querySelector('.loading-progress');
-    const progressPercentage = document.querySelector('.progress-percentage');
-    
-    if (!loadingScreen) return;
-    
-    let progress = 0;
-    const steps = [
-        { text: 'تحميل الواجهة...', target: 20 },
-        { text: 'تهيئة الذكاء الاصطناعي...', target: 45 },
-        { text: 'تحضير العرض التوضيحي...', target: 70 },
-        { text: 'تحسين الأداء...', target: 90 },
-        { text: 'مرحباً بك في Dr. Scent AI!', target: 100 }
-    ];
-    
-    let currentStep = 0;
-    const typingElement = document.querySelector('.typing-text');
-    
-    const updateProgress = () => {
-        if (currentStep >= steps.length) {
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 500);
-            }, 1000);
-            return;
-        }
-        
-        const step = steps[currentStep];
-        typingElement.textContent = step.text;
-        
-        const interval = setInterval(() => {
-            progress += Math.random() * 3 + 1;
-            if (progress >= step.target) {
-                progress = step.target;
-                clearInterval(interval);
-                currentStep++;
-                setTimeout(updateProgress, 800);
-            }
-            
-            progressBar.style.width = progress + '%';
-            progressPercentage.textContent = Math.floor(progress) + '%';
-        }, 100);
-    };
-    
-    updateProgress();
-}
+    init() {
+        this.createLoadingHTML();
+        this.startAnimation();
+    }
 
-// Interactive Cursor Follower
-function initializeCursorFollower() {
-    const follower = document.createElement('div');
-    follower.className = 'cursor-follower';
-    follower.id = 'cursorFollower';
-    document.body.appendChild(follower);
-    
-    let mouseX = 0, mouseY = 0;
-    let followerX = 0, followerY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-    
-    const animateFollower = () => {
-        const speed = 0.1;
-        followerX += (mouseX - followerX) * speed;
-        followerY += (mouseY - followerY) * speed;
-        
-        follower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px)`;
-        requestAnimationFrame(animateFollower);
-    };
-    
-    animateFollower();
-    
-    // Enhanced cursor effects on hover
-    const interactiveElements = document.querySelectorAll('a, button, .card');
-    interactiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            follower.style.transform += ' scale(2)';
-            follower.style.background = 'radial-gradient(circle, rgba(255, 107, 107, 0.8) 0%, rgba(78, 205, 196, 0.5) 100%)';
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            follower.style.transform = follower.style.transform.replace(' scale(2)', '');
-            follower.style.background = 'radial-gradient(circle, rgba(102, 126, 234, 0.6) 0%, rgba(118, 75, 162, 0.3) 100%)';
-        });
-    });
-}
-
-// Advanced Music Control with Background Sounds
-function initializeMusicControl() {
-    const musicControl = document.getElementById('musicControl');
-    const musicButton = document.querySelector('.music-button');
-    
-    if (window.innerWidth > 768) {
-        musicControl.style.display = 'block';
-    }
-    
-    let isPlaying = false;
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    
-    musicButton.addEventListener('click', () => {
-        if (isPlaying) {
-            pauseAmbientSound();
-            musicButton.innerHTML = '<i class="fas fa-music"></i>';
-        } else {
-            playAmbientSound();
-            musicButton.innerHTML = '<i class="fas fa-pause"></i>';
-        }
-        isPlaying = !isPlaying;
-    });
-    
-    function playAmbientSound() {
-        // Create subtle ambient background tones
-        const oscillator = audioContext.createOscillator();
-        const gainNode = audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(audioContext.destination);
-        
-        oscillator.frequency.setValueAtTime(220, audioContext.currentTime);
-        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-        
-        oscillator.start();
-        
-        // Animate visualizer bars
-        const bars = document.querySelectorAll('.bar');
-        bars.forEach((bar, index) => {
-            bar.style.animationPlayState = 'running';
-        });
-    }
-    
-    function pauseAmbientSound() {
-        const bars = document.querySelectorAll('.bar');
-        bars.forEach((bar, index) => {
-            bar.style.animationPlayState = 'paused';
-        });
-    }
-}
-
-// Advanced Theme Switcher
-function initializeThemeSwitcher() {
-    const themeSwitcher = document.getElementById('themeSwitcher');
-    const themeButton = document.querySelector('.theme-button');
-    
-    if (window.innerWidth > 768) {
-        themeSwitcher.style.display = 'block';
-    }
-    
-    let isDark = false;
-    
-    themeButton.addEventListener('click', () => {
-        isDark = !isDark;
-        document.body.classList.toggle('dark-theme', isDark);
-        
-        themeButton.innerHTML = isDark ? 
-            '<i class="fas fa-sun"></i>' : 
-            '<i class="fas fa-moon"></i>';
-        
-        // Smooth transition effect
-        document.body.style.transition = 'all 0.3s ease';
-        setTimeout(() => {
-            document.body.style.transition = '';
-        }, 300);
-        
-        // Save preference
-        localStorage.setItem('darkTheme', isDark);
-    });
-    
-    // Load saved theme
-    const savedTheme = localStorage.getItem('darkTheme') === 'true';
-    if (savedTheme) {
-        themeButton.click();
-    }
-}
-
-// Enhanced Demo Chat with AI Responses
-function initializeAdvancedDemo() {
-    const demoInput = document.getElementById('demoInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const chatMessages = document.getElementById('chatMessages');
-    const demoButtons = document.querySelectorAll('.demo-btn');
-    
-    const aiResponses = {
-        'أسعار': 'لدينا عطور متنوعة تبدأ من 50$ وحتى 500$ 💰\nما هو النوع المفضل لك؟',
-        'العطور المتوفرة': 'لدينا مجموعة رائعة:\n🌹 عطور رومانسية\n🌿 عطور طبيعية\n✨ عطور فاخرة\n🎭 عطور كلاسيكية',
-        'طلب': 'رائع! سأساعدك في الطلب 🛒\nيرجى تحديد:\n1️⃣ نوع العطر\n2️⃣ الكمية المطلوبة\n3️⃣ عنوان التوصيل',
-        'التواصل': 'يمكنك التواصل معنا عبر:\n📞 +96170106083\n📧 hasanalzein2024@gmail.com\n💬 WhatsApp متاح 24/7'
-    };
-    
-    function addMessage(text, isUser = false) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-        
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'message-content';
-        contentDiv.innerHTML = text.replace(/\n/g, '<br>');
-        
-        const timeDiv = document.createElement('div');
-        timeDiv.className = 'message-time';
-        timeDiv.textContent = new Date().toLocaleTimeString('ar-SA', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        
-        messageDiv.appendChild(contentDiv);
-        messageDiv.appendChild(timeDiv);
-        chatMessages.appendChild(messageDiv);
-        
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        // Typing animation for bot messages
-        if (!isUser) {
-            contentDiv.style.opacity = '0';
-            contentDiv.style.transform = 'translateY(10px)';
-            setTimeout(() => {
-                contentDiv.style.transition = 'all 0.3s ease';
-                contentDiv.style.opacity = '1';
-                contentDiv.style.transform = 'translateY(0)';
-            }, 500);
-        }
-    }
-    
-    function getAIResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        for (const [key, response] of Object.entries(aiResponses)) {
-            if (lowerMessage.includes(key.toLowerCase())) {
-                return response;
-            }
-        }
-        
-        // Default intelligent response
-        return `شكراً لك على رسالتك "${message}" 🌺\nسأقوم بتحليل طلبك وسأعود إليك بأفضل التوصيات المناسبة لتفضيلاتك!\n\nهل تريد معرفة المزيد عن خدماتنا؟`;
-    }
-    
-    function sendMessage() {
-        const message = demoInput.value.trim();
-        if (!message) return;
-        
-        addMessage(message, true);
-        demoInput.value = '';
-        
-        // Show typing indicator
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot typing';
-        typingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-        chatMessages.appendChild(typingDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-        
-        setTimeout(() => {
-            chatMessages.removeChild(typingDiv);
-            addMessage(getAIResponse(message));
-        }, 1500);
-    }
-    
-    sendBtn.addEventListener('click', sendMessage);
-    demoInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
-    });
-    
-    demoButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            demoInput.value = btn.dataset.message;
-            sendMessage();
-        });
-    });
-}
-
-// Live Analytics Dashboard
-function initializeLiveAnalytics() {
-    const analyticsBtn = document.createElement('button');
-    analyticsBtn.innerHTML = '📊';
-    analyticsBtn.style.cssText = `
-        position: fixed;
-        top: 240px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background: var(--success-color);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 1.2rem;
-        z-index: 1000;
-        box-shadow: var(--shadow-lg);
-        transition: var(--transition);
-    `;
-    
-    if (window.innerWidth > 768) {
-        document.body.appendChild(analyticsBtn);
-    }
-    
-    const dashboard = document.getElementById('analyticsDashboard');
-    let isVisible = false;
-    let sessionStartTime = Date.now();
-    let sectionsVisited = new Set();
-    
-    analyticsBtn.addEventListener('click', () => {
-        isVisible = !isVisible;
-        dashboard.style.display = isVisible ? 'block' : 'none';
-        analyticsBtn.style.transform = isVisible ? 'scale(1.1)' : 'scale(1)';
-    });
-    
-    // Update analytics in real-time
-    setInterval(() => {
-        document.getElementById('currentVisitors').textContent = Math.floor(Math.random() * 5) + 1;
-        
-        const sessionTime = Math.floor((Date.now() - sessionStartTime) / 1000);
-        const minutes = Math.floor(sessionTime / 60);
-        const seconds = sessionTime % 60;
-        document.getElementById('sessionTime').textContent = 
-            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        
-        document.getElementById('sectionsVisited').textContent = sectionsVisited.size;
-    }, 1000);
-    
-    // Track section visits
-    const sections = document.querySelectorAll('section[id]');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                sectionsVisited.add(entry.target.id);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-}
-
-// Easter Egg Activation
-function initializeEasterEgg() {
-    let konami = [];
-    const konamiCode = [
-        'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
-        'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
-        'KeyB', 'KeyA'
-    ];
-    
-    document.addEventListener('keydown', (e) => {
-        konami.push(e.code);
-        if (konami.length > konamiCode.length) {
-            konami.shift();
-        }
-        
-        if (konami.length === konamiCode.length && 
-            konami.every((key, index) => key === konamiCode[index])) {
-            document.getElementById('easterEgg').style.display = 'flex';
-            konami = [];
-            
-            // Confetti effect
-            createConfetti();
-        }
-    });
-    
-    // Secret click combination
-    let clickCount = 0;
-    document.querySelector('.logo').addEventListener('click', () => {
-        clickCount++;
-        if (clickCount === 7) {
-            document.getElementById('easterEgg').style.display = 'flex';
-            clickCount = 0;
-            createConfetti();
-        }
-        setTimeout(() => { clickCount = 0; }, 3000);
-    });
-}
-
-function createConfetti() {
-    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffd93d', '#6c5ce7'];
-    
-    for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.style.cssText = `
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            top: -10px;
-            left: ${Math.random() * 100}%;
-            z-index: 10001;
-            pointer-events: none;
-            animation: confettiFall 3s linear forwards;
+    createLoadingHTML() {
+        const loadingScreen = document.createElement('div');
+        loadingScreen.className = 'loading-screen';
+        loadingScreen.innerHTML = `
+            <div class="loading-container">
+                <div class="ai-brain">
+                    <div class="neural-network">
+                        <div class="neuron"></div>
+                        <div class="neuron"></div>
+                        <div class="neuron"></div>
+                        <div class="neuron"></div>
+                        <div class="neuron"></div>
+                    </div>
+                </div>
+                <div class="typing-animation">
+                    <h3>مرحباً بك في مستقبل التجارة الإلكترونية</h3>
+                    <div class="typing-text"></div>
+                </div>
+                <div class="loading-progress-container">
+                    <div class="loading-progress">
+                        <div class="progress-sparkle"></div>
+                    </div>
+                </div>
+                <div class="progress-percentage">0%</div>
+            </div>
+            <div class="loading-particles">
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+                <div class="particle"></div>
+            </div>
+            <div class="digital-rain">
+                <div class="code-line">if (success) {</div>
+                <div class="code-line">  grow_business();</div>
+                <div class="code-line">  increase_sales();</div>
+                <div class="code-line">}</div>
+            </div>
         `;
-        
-        document.body.appendChild(confetti);
-        
-        setTimeout(() => {
-            if (confetti.parentNode) {
-                confetti.parentNode.removeChild(confetti);
+        document.body.appendChild(loadingScreen);
+        this.loadingElement = loadingScreen;
+    }
+
+    startAnimation() {
+        this.typeMessages();
+        this.updateProgress();
+    }
+
+    typeMessages() {
+        const typingElement = document.querySelector('.typing-text');
+        let charIndex = 0;
+        const currentMessage = this.messages[this.currentMessage];
+
+        const typing = setInterval(() => {
+            typingElement.textContent = currentMessage.substring(0, charIndex);
+            charIndex++;
+
+            if (charIndex > currentMessage.length) {
+                clearInterval(typing);
+                setTimeout(() => {
+                    this.currentMessage = (this.currentMessage + 1) % this.messages.length;
+                    if (this.currentMessage !== 0) {
+                        setTimeout(() => this.typeMessages(), 500);
+                    }
+                }, 1000);
             }
+        }, 100);
+    }
+
+    updateProgress() {
+        const progressBar = document.querySelector('.loading-progress');
+        const progressText = document.querySelector('.progress-percentage');
+        
+        const updateInterval = setInterval(() => {
+            this.progress += Math.random() * 15;
+            if (this.progress >= 100) {
+                this.progress = 100;
+                clearInterval(updateInterval);
+                setTimeout(() => this.hide(), 1000);
+            }
+            
+            progressBar.style.width = this.progress + '%';
+            progressText.textContent = Math.round(this.progress) + '%';
+        }, 200);
+    }
+
+    hide() {
+        this.loadingElement.classList.add('hidden');
+        setTimeout(() => {
+            this.loadingElement.remove();
+        }, 500);
+    }
+}
+
+// ========================================
+// SUCCESS STORIES COUNTER ANIMATION
+// ========================================
+class SuccessCounter {
+    constructor() {
+        this.counters = {
+            clients: { target: 500, current: 0, element: null },
+            sales: { target: 2000000, current: 0, element: null },
+            growth: { target: 300, current: 0, element: null },
+            satisfaction: { target: 98, current: 0, element: null }
+        };
+        this.init();
+    }
+
+    init() {
+        this.createCountersHTML();
+        this.setupIntersectionObserver();
+    }
+
+    createCountersHTML() {
+        const container = document.querySelector('.success-grid');
+        container.innerHTML = `
+            <div class="success-item" data-counter="clients">
+                <div class="success-icon">👥</div>
+                <span class="success-number">0</span>
+                <div class="success-label">عميل راضٍ</div>
+            </div>
+            <div class="success-item" data-counter="sales">
+                <div class="success-icon">💰</div>
+                <span class="success-number">0</span>
+                <div class="success-label">ريال مبيعات</div>
+            </div>
+            <div class="success-item" data-counter="growth">
+                <div class="success-icon">📈</div>
+                <span class="success-number">0</span>
+                <div class="success-label">% نمو متوسط</div>
+            </div>
+            <div class="success-item" data-counter="satisfaction">
+                <div class="success-icon">⭐</div>
+                <span class="success-number">0</span>
+                <div class="success-label">% رضا العملاء</div>
+            </div>
+        `;
+
+        // ربط العناصر
+        Object.keys(this.counters).forEach(key => {
+            const element = document.querySelector(`[data-counter="${key}"] .success-number`);
+            this.counters[key].element = element;
+        });
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    this.startCounting();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.success-item').forEach(item => {
+            observer.observe(item);
+        });
+    }
+
+    startCounting() {
+        Object.keys(this.counters).forEach(key => {
+            this.animateCounter(key);
+        });
+    }
+
+    animateCounter(counterKey) {
+        const counter = this.counters[counterKey];
+        const duration = 2000;
+        const steps = 60;
+        const increment = counter.target / steps;
+        const stepDuration = duration / steps;
+
+        const animate = () => {
+            counter.current += increment;
+            if (counter.current >= counter.target) {
+                counter.current = counter.target;
+            }
+
+            this.updateDisplay(counterKey);
+
+            if (counter.current < counter.target) {
+                setTimeout(animate, stepDuration);
+            }
+        };
+
+        animate();
+    }
+
+    updateDisplay(counterKey) {
+        const counter = this.counters[counterKey];
+        let displayValue = Math.round(counter.current);
+
+        if (counterKey === 'sales') {
+            displayValue = this.formatSalesNumber(displayValue);
+        } else if (counterKey === 'clients') {
+            displayValue = displayValue.toLocaleString('ar-SA');
+        }
+
+        counter.element.textContent = displayValue;
+    }
+
+    formatSalesNumber(num) {
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1) + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(0) + 'K';
+        }
+        return num.toString();
+    }
+}
+
+// ========================================
+// TESTIMONIALS CAROUSEL
+// ========================================
+class TestimonialsCarousel {
+    constructor() {
+        this.testimonials = [
+            {
+                name: "أحمد محمد",
+                role: "مدير متجر الموضة",
+                content: "زادت مبيعاتي 300% في أول شهر! المساعد الذكي يجيب على العملاء حتى في منتصف الليل.",
+                rating: 5,
+                avatar: "أ"
+            },
+            {
+                name: "فاطمة السعد",
+                role: "صاحبة متجر مجوهرات",
+                content: "أصبح لدي وقت أكثر للتركيز على تطوير منتجاتي بدلاً من الرد على الاستفسارات المتكررة.",
+                rating: 5,
+                avatar: "ف"
+            },
+            {
+                name: "خالد العتيبي",
+                role: "مؤسس متجر إلكتروني",
+                content: "الذكاء الاصطناعي فهم عملائي أكثر مني! التحويلات زادت بشكل مذهل.",
+                rating: 5,
+                avatar: "خ"
+            },
+            {
+                name: "نورا القحطاني",
+                role: "مديرة متجر تجميل",
+                content: "العملاء يشعرون وكأنهم يتحدثون مع خبير تجميل حقيقي. النتائج رائعة!",
+                rating: 5,
+                avatar: "ن"
+            }
+        ];
+        this.currentIndex = 0;
+        this.init();
+    }
+
+    init() {
+        this.createCarouselHTML();
+        this.startAutoPlay();
+    }
+
+    createCarouselHTML() {
+        const container = document.querySelector('.testimonials-carousel');
+        
+        // إنشاء البطاقات
+        this.testimonials.forEach((testimonial, index) => {
+            const card = document.createElement('div');
+            card.className = `testimonial-card ${index === 0 ? 'active' : ''}`;
+            card.innerHTML = `
+                <div class="testimonial-content">
+                    <div class="stars">${'⭐'.repeat(testimonial.rating)}</div>
+                    <p>"${testimonial.content}"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">${testimonial.avatar}</div>
+                        <div class="author-info">
+                            <h4>${testimonial.name}</h4>
+                            <span>${testimonial.role}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // إنشاء المؤشرات
+        const indicators = document.createElement('div');
+        indicators.className = 'carousel-indicators';
+        this.testimonials.forEach((_, index) => {
+            const indicator = document.createElement('button');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.addEventListener('click', () => this.goToSlide(index));
+            indicators.appendChild(indicator);
+        });
+        
+        container.parentElement.appendChild(indicators);
+    }
+
+    goToSlide(index) {
+        // إخفاء البطاقة الحالية
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            card.classList.remove('active');
+        });
+        
+        // إخفاء المؤشر الحالي
+        document.querySelectorAll('.indicator').forEach(indicator => {
+            indicator.classList.remove('active');
+        });
+
+        // إظهار البطاقة الجديدة
+        document.querySelectorAll('.testimonial-card')[index].classList.add('active');
+        document.querySelectorAll('.indicator')[index].classList.add('active');
+        
+        this.currentIndex = index;
+    }
+
+    nextSlide() {
+        const nextIndex = (this.currentIndex + 1) % this.testimonials.length;
+        this.goToSlide(nextIndex);
+    }
+
+    startAutoPlay() {
+        setInterval(() => {
+            this.nextSlide();
+        }, 5000);
+    }
+}
+
+// ========================================
+// INTERACTIVE DEMO
+// ========================================
+class InteractiveDemo {
+    constructor() {
+        this.demoMessages = {
+            product: [
+                { type: 'user', content: 'أريد معلومات عن منتجاتكم', time: '14:30' },
+                { type: 'bot', content: 'أهلاً وسهلاً! يسعدني مساعدتك. ما نوع المنتج الذي تبحث عنه؟', time: '14:30' }
+            ],
+            price: [
+                { type: 'user', content: 'كم سعر هذا المنتج؟', time: '14:32' },
+                { type: 'bot', content: 'السعر 299 ريال مع خصم 20% لفترة محدودة! يصبح 239 ريال فقط', time: '14:32' }
+            ],
+            shipping: [
+                { type: 'user', content: 'متى يوصل الطلب؟', time: '14:34' },
+                { type: 'bot', content: 'التوصيل خلال 24-48 ساعة في الرياض و3-5 أيام للمناطق الأخرى 🚚', time: '14:34' }
+            ],
+            support: [
+                { type: 'user', content: 'أحتاج مساعدة فنية', time: '14:36' },
+                { type: 'bot', content: 'بالطبع! سأوصلك بفريق الدعم الفني خلال دقيقتين. أو يمكنني مساعدتك الآن؟', time: '14:36' }
+            ]
+        };
+        this.init();
+    }
+
+    init() {
+        this.setupDemoButtons();
+        this.createInitialMessages();
+    }
+
+    setupDemoButtons() {
+        document.querySelectorAll('.demo-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const scenario = e.target.dataset.scenario;
+                this.playScenario(scenario);
+            });
+        });
+    }
+
+    createInitialMessages() {
+        const chatMessages = document.querySelector('.chat-messages');
+        chatMessages.innerHTML = `
+            <div class="message bot">
+                <div class="message-content">
+                    مرحباً! أنا مساعدك الذكي 🤖<br>
+                    كيف يمكنني مساعدتك اليوم؟
+                </div>
+                <div class="message-time">14:28</div>
+            </div>
+        `;
+    }
+
+    playScenario(scenario) {
+        const messages = this.demoMessages[scenario];
+        const chatMessages = document.querySelector('.chat-messages');
+        
+        // مسح الرسائل السابقة
+        setTimeout(() => {
+            chatMessages.innerHTML = '';
+            this.createInitialMessages();
+            
+            // إضافة الرسائل الجديدة تدريجياً
+            messages.forEach((message, index) => {
+                setTimeout(() => {
+                    this.addMessage(message);
+                }, (index + 1) * 1500);
+            });
+        }, 500);
+    }
+
+    addMessage(message) {
+        const chatMessages = document.querySelector('.chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${message.type}`;
+        messageDiv.innerHTML = `
+            <div class="message-content">${message.content}</div>
+            <div class="message-time">${message.time}</div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+}
+
+// ========================================
+// INTERACTIVE STATS DASHBOARD
+// ========================================
+class StatsDashboard {
+    constructor() {
+        this.stats = {
+            responses: { target: 50000, current: 0, suffix: '', label: 'استفسار تم الرد عليه' },
+            speed: { target: 3, current: 0, suffix: 'ث', label: 'متوسط وقت الاستجابة' },
+            satisfaction: { target: 97, current: 0, suffix: '%', label: 'معدل رضا العملاء' },
+            conversion: { target: 45, current: 0, suffix: '%', label: 'تحسن معدل التحويل' }
+        };
+        this.init();
+    }
+
+    init() {
+        this.createStatsHTML();
+        this.setupIntersectionObserver();
+    }
+
+    createStatsHTML() {
+        const container = document.querySelector('.stats-dashboard');
+        container.innerHTML = Object.keys(this.stats).map(key => {
+            const stat = this.stats[key];
+            const icon = this.getStatIcon(key);
+            return `
+                <div class="stat-card" data-stat="${key}">
+                    <div class="stat-icon">${icon}</div>
+                    <span class="stat-number">0${stat.suffix}</span>
+                    <div class="stat-label">${stat.label}</div>
+                    <div class="stat-graph">
+                        <div class="graph-bar" data-percentage="${this.getPercentage(key)}"></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    getStatIcon(key) {
+        const icons = {
+            responses: '💬',
+            speed: '⚡',
+            satisfaction: '😊',
+            conversion: '📊'
+        };
+        return icons[key];
+    }
+
+    getPercentage(key) {
+        const stat = this.stats[key];
+        if (key === 'responses') return Math.min((stat.target / 100000) * 100, 100);
+        if (key === 'speed') return 100 - ((stat.target / 10) * 100);
+        return stat.target;
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    this.animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            observer.observe(card);
+        });
+    }
+
+    animateStats() {
+        Object.keys(this.stats).forEach(key => {
+            this.animateStat(key);
+        });
+    }
+
+    animateStat(statKey) {
+        const stat = this.stats[statKey];
+        const element = document.querySelector(`[data-stat="${statKey}"] .stat-number`);
+        const graphBar = document.querySelector(`[data-stat="${statKey}"] .graph-bar`);
+        
+        const duration = 2000;
+        const steps = 60;
+        const increment = stat.target / steps;
+        const stepDuration = duration / steps;
+
+        const animate = () => {
+            stat.current += increment;
+            if (stat.current >= stat.target) {
+                stat.current = stat.target;
+            }
+
+            let displayValue = Math.round(stat.current);
+            if (statKey === 'responses') {
+                displayValue = displayValue.toLocaleString('ar-SA');
+            }
+            
+            element.textContent = displayValue + stat.suffix;
+
+            if (stat.current < stat.target) {
+                setTimeout(animate, stepDuration);
+            } else {
+                // تحريك شريط التقدم
+                setTimeout(() => {
+                    graphBar.style.width = graphBar.dataset.percentage + '%';
+                }, 500);
+            }
+        };
+
+        animate();
+    }
+}
+
+// ========================================
+// AI CHAT WIDGET
+// ========================================
+class AIChatWidget {
+    constructor() {
+        this.isOpen = false;
+        this.messages = [];
+        this.responses = [
+            "مرحباً! كيف يمكنني مساعدتك اليوم؟",
+            "هذا سؤال رائع! دعني أساعدك في ذلك.",
+            "بالتأكيد يمكنني مساعدتك. هل تريد معرفة المزيد عن خدماتنا؟",
+            "أفهم احتياجك. سأوصلك بفريق المبيعات للحصول على عرض مخصص.",
+            "شكراً لك على اهتمامك! هل تريد جدولة مكالمة مجانية؟"
+        ];
+        this.init();
+    }
+
+    init() {
+        this.createChatHTML();
+        this.setupEventListeners();
+        this.showWelcomeMessage();
+    }
+
+    createChatHTML() {
+        const chatLauncher = document.createElement('button');
+        chatLauncher.className = 'chat-launcher';
+        chatLauncher.innerHTML = `
+            💬
+            <span class="chat-badge">جديد</span>
+        `;
+        document.body.appendChild(chatLauncher);
+
+        const chatWidget = document.createElement('div');
+        chatWidget.className = 'ai-chat-widget';
+        chatWidget.innerHTML = `
+            <div class="chat-header">
+                <div>
+                    <i class="fas fa-robot"></i>
+                    المساعد الذكي
+                </div>
+                <button class="chat-toggle">✕</button>
+            </div>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="chat-input-area">
+                <input type="text" placeholder="اكتب رسالتك هنا..." id="chat-input">
+                <button id="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        `;
+        document.body.appendChild(chatWidget);
+
+        this.chatWidget = chatWidget;
+        this.chatLauncher = chatLauncher;
+        this.chatMessages = document.getElementById('chat-messages');
+        this.chatInput = document.getElementById('chat-input');
+    }
+
+    setupEventListeners() {
+        this.chatLauncher.addEventListener('click', () => this.toggleChat());
+        document.querySelector('.chat-toggle').addEventListener('click', () => this.toggleChat());
+        
+        document.getElementById('send-btn').addEventListener('click', () => this.sendMessage());
+        this.chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.sendMessage();
+        });
+    }
+
+    toggleChat() {
+        this.isOpen = !this.isOpen;
+        this.chatWidget.classList.toggle('active', this.isOpen);
+        this.chatLauncher.style.display = this.isOpen ? 'none' : 'flex';
+        
+        if (this.isOpen) {
+            this.chatInput.focus();
+            document.querySelector('.chat-badge').style.display = 'none';
+        }
+    }
+
+    showWelcomeMessage() {
+        setTimeout(() => {
+            this.addMessage('مرحباً! أنا هنا لمساعدتك. اضغط للمحادثة 👋', 'bot');
         }, 3000);
     }
-    
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes confettiFall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-}
 
-// AI Chat Widget Enhancement
-function initializeAIChatWidget() {
-    const chatLauncher = document.getElementById('chat-launcher');
-    const chatWidget = document.getElementById('ai-chat-widget');
-    const chatToggle = document.querySelector('.chat-toggle');
-    const chatInput = document.getElementById('chatInput');
-    const sendMessage = document.getElementById('sendMessage');
-    
-    let isWidgetOpen = false;
-    
-    chatLauncher.addEventListener('click', () => {
-        isWidgetOpen = !isWidgetOpen;
-        chatWidget.classList.toggle('active', isWidgetOpen);
-        chatLauncher.style.display = isWidgetOpen ? 'none' : 'flex';
-    });
-    
-    chatToggle.addEventListener('click', () => {
-        isWidgetOpen = false;
-        chatWidget.classList.remove('active');
-        chatLauncher.style.display = 'flex';
-    });
-    
-    // Enhanced chat functionality
-    const responses = [
-        'مرحباً! كيف يمكنني مساعدتك اليوم؟ 🌺',
-        'أستطيع مساعدتك في اختيار العطر المثالي! ✨',
-        'لدينا عروض خاصة اليوم! هل تريد معرفة المزيد؟ 💎',
-        'أي نوع من العطور تفضل؟ رومانسي، كلاسيكي، أم عصري؟ 🎭'
-    ];
-    
-    function addChatMessage(message, isUser = false) {
-        const messagesContainer = document.getElementById('chatMessages');
+    sendMessage() {
+        const message = this.chatInput.value.trim();
+        if (!message) return;
+
+        this.addMessage(message, 'user');
+        this.chatInput.value = '';
+
+        // رد تلقائي من البوت
+        setTimeout(() => {
+            const response = this.getRandomResponse();
+            this.addMessage(response, 'bot');
+        }, 1000);
+    }
+
+    addMessage(content, type) {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `ai-message ${isUser ? 'user' : 'bot'}`;
-        
+        messageDiv.className = `ai-message ${type}`;
         messageDiv.innerHTML = `
-            <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
-            <div class="message-content">${message}</div>
+            <div class="message-avatar">${type === 'bot' ? '🤖' : '👤'}</div>
+            <div class="message-content">${content}</div>
         `;
         
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        this.chatMessages.appendChild(messageDiv);
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+        
+        this.messages.push({ content, type, timestamp: new Date() });
     }
-    
-    sendMessage.addEventListener('click', () => {
-        const message = chatInput.value.trim();
-        if (message) {
-            addChatMessage(message, true);
-            chatInput.value = '';
-            
-            setTimeout(() => {
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addChatMessage(randomResponse);
-            }, 1000);
-        }
-    });
-    
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage.click();
-        }
-    });
+
+    getRandomResponse() {
+        return this.responses[Math.floor(Math.random() * this.responses.length)];
+    }
 }
 
-// Initialize all advanced features
-document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced initialization
-    initializeAdvancedLoading();
-    initializeCursorFollower();
-    initializeMusicControl();
-    initializeThemeSwitcher();
-    initializeAdvancedDemo();
-    initializeLiveAnalytics();
-    initializeEasterEgg();
-    initializeAIChatWidget();
-    
-    // Performance monitoring
-    console.log('🚀 Dr. Scent AI - Advanced Features Loaded!');
-    console.log('💡 Try the Konami Code for a surprise!');
-    console.log('🎨 Professional touches by HMZ Technology');
-    
-    // Track page performance
-    window.addEventListener('load', () => {
-        const loadTime = performance.now();
-        console.log(`⚡ Page fully loaded in ${loadTime.toFixed(2)}ms`);
-        
-        if (loadTime < 3000) {
-            console.log('🎯 Excellent performance!');
-        }
-    });
-});
+// ========================================
+// ADVANCED UI EFFECTS
+// ========================================
+class AdvancedUIEffects {
+    constructor() {
+        this.init();
+    }
 
-// Navigation functionality
-function initializeNavigation() {
-    const header = document.querySelector('.header');
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    init() {
+        this.createCursorFollower();
+        this.createMusicControl();
+        this.createThemeSwitcher();
+        this.setupParallaxEffects();
+        this.createFloatingElements();
+    }
 
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+    createCursorFollower() {
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor-follower';
+        document.body.appendChild(cursor);
 
-    // Mobile menu toggle
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+    }
+
+    createMusicControl() {
+        const musicControl = document.createElement('div');
+        musicControl.className = 'music-control';
+        musicControl.innerHTML = `
+            <button class="music-button">
+                🎵
+            </button>
+            <div class="music-visualizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        `;
+        document.body.appendChild(musicControl);
+
+        let isPlaying = false;
+        musicControl.querySelector('.music-button').addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const bars = musicControl.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.style.animationPlayState = isPlaying ? 'running' : 'paused';
+            });
+            musicControl.querySelector('.music-button').textContent = isPlaying ? '🔇' : '🎵';
+        });
+    }
+
+    createThemeSwitcher() {
+        const themeSwitcher = document.createElement('div');
+        themeSwitcher.className = 'theme-switcher';
+        themeSwitcher.innerHTML = `
+            <button class="theme-button">🌙</button>
+        `;
+        document.body.appendChild(themeSwitcher);
+
+        let isDark = false;
+        themeSwitcher.querySelector('.theme-button').addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.classList.toggle('dark-theme', isDark);
+            themeSwitcher.querySelector('.theme-button').textContent = isDark ? '☀️' : '🌙';
+        });
+    }
+
+    setupParallaxEffects() {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.parallax');
             
-            // Animate hamburger
-            const spans = hamburger.querySelectorAll('span');
-            spans.forEach((span, index) => {
-                if (hamburger.classList.contains('active')) {
-                    if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
-                    if (index === 1) span.style.opacity = '0';
-                    if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -6px)';
-                } else {
-                    span.style.transform = '';
-                    span.style.opacity = '';
-                }
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.speed || 0.5;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
     }
 
-    // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            
-            // Reset hamburger animation
-            const spans = hamburger.querySelectorAll('span');
-            spans.forEach(span => {
-                span.style.transform = '';
-                span.style.opacity = '';
+    createFloatingElements() {
+        const hero = document.querySelector('.hero');
+        for (let i = 0; i < 5; i++) {
+            const float = document.createElement('div');
+            float.className = 'floating-element';
+            float.style.cssText = `
+                position: absolute;
+                width: ${Math.random() * 20 + 10}px;
+                height: ${Math.random() * 20 + 10}px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                top: ${Math.random() * 100}%;
+                left: ${Math.random() * 100}%;
+                animation: float ${Math.random() * 10 + 10}s ease-in-out infinite;
+                animation-delay: ${Math.random() * 5}s;
+            `;
+            hero.appendChild(float);
+        }
+    }
+}
+
+// ========================================
+// CONTACT FORM ENHANCEMENT
+// ========================================
+class ContactFormHandler {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupWhatsAppButtons();
+        this.createUrgencyTimer();
+        this.setupFormValidation();
+    }
+
+    setupWhatsAppButtons() {
+        document.querySelectorAll('.whatsapp-btn, .contact-btn.primary, .final-cta-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.openWhatsApp();
             });
         });
-    });
+    }
 
-    // Active link highlighting
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-}
+    openWhatsApp() {
+        const phoneNumber = '966123456789'; // رقم الواتس آب
+        const message = encodeURIComponent(`
+مرحباً! أريد معرفة المزيد عن خدمات الذكاء الاصطناعي للتجارة الإلكترونية.
 
-// Scroll animations
-function initializeScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+أريد:
+✅ استشارة مجانية
+✅ عرض سعر مخصص
+✅ تجربة مجانية لمدة 7 أيام
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                
-                // Trigger counter animations for stats
-                if (entry.target.classList.contains('stat') || 
-                    entry.target.classList.contains('ai-stat') || 
-                    entry.target.classList.contains('roi-card')) {
-                    animateCounter(entry.target);
-                }
-            }
-        });
-    }, observerOptions);
-
-    // Observe all elements that should animate
-    const animatedElements = document.querySelectorAll(`
-        .feature-card,
-        .service-card,
-        .benefit-card,
-        .tech-card,
-        .stat,
-        .ai-stat,
-        .roi-card,
-        .timeline-item,
-        .pricing-card,
-        .reason-item,
-        .contact-method
-    `);
-
-    animatedElements.forEach(el => {
-        el.classList.add('fade-in');
-        observer.observe(el);
-    });
-}
-
-// Counter animations for statistics
-function initializeCounterAnimations() {
-    // This will be triggered by the intersection observer
-}
-
-function animateCounter(element) {
-    const numberElement = element.querySelector('.stat-number, .roi-percentage');
-    if (!numberElement || numberElement.dataset.animated) return;
-
-    const target = parseInt(numberElement.textContent.replace(/[^\d]/g, ''));
-    const duration = 2000; // 2 seconds
-    const step = target / (duration / 16); // 60fps
-    let current = 0;
-
-    const counter = setInterval(() => {
-        current += step;
-        if (current >= target) {
-            current = target;
-            clearInterval(counter);
-        }
+اسمي: [اكتب اسمك هنا]
+نوع المتجر: [اكتب نوع متجرك]
+        `);
         
-        // Format the number based on original content
-        const originalText = numberElement.textContent;
-        if (originalText.includes('%')) {
-            numberElement.textContent = Math.floor(current) + '%';
-        } else if (originalText.includes('+')) {
-            numberElement.textContent = Math.floor(current) + '+';
-        } else if (originalText.includes('/')) {
-            numberElement.textContent = originalText.replace(/\d+/, Math.floor(current));
-        } else {
-            numberElement.textContent = Math.floor(current);
-        }
-    }, 16);
+        const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+        window.open(whatsappURL, '_blank');
+        
+        // تتبع النقرة
+        this.trackConversion('whatsapp_click');
+    }
 
-    numberElement.dataset.animated = 'true';
-}
+    createUrgencyTimer() {
+        const urgencyElement = document.querySelector('.urgency-message');
+        if (!urgencyElement) return;
 
-// Form handling
-function initializeFormHandling() {
-    const contactForm = document.querySelector('.contact-form form');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+        let timeLeft = 24 * 60 * 60; // 24 ساعة بالثواني
+        
+        const updateTimer = () => {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
             
-            const formData = new FormData(this);
-            const submitBtn = this.querySelector('.btn');
-            const originalText = submitBtn.textContent;
+            urgencyElement.innerHTML = `
+                ⏰ العرض المحدود ينتهي خلال: 
+                ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}
+            `;
             
-            // Show loading state
-            submitBtn.textContent = 'جاري الإرسال...';
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.7';
-            
-            // Simulate form submission (replace with actual form submission logic)
-            setTimeout(() => {
-                // Show success message
-                showNotification('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.', 'success');
-                
-                // Reset form
-                this.reset();
-                
-                // Reset button
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.opacity = '1';
-            }, 2000);
-        });
+            timeLeft--;
+            if (timeLeft < 0) timeLeft = 24 * 60 * 60; // إعادة تعيين المؤقت
+        };
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
 
-        // Add form validation
-        const inputs = contactForm.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('blur', validateField);
-            input.addEventListener('input', clearValidation);
+    setupFormValidation() {
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.handleFormSubmit(form);
+            });
         });
     }
-}
 
-function validateField(e) {
-    const field = e.target;
-    const value = field.value.trim();
-    
-    // Remove existing validation
-    clearValidation(e);
-    
-    let isValid = true;
-    let message = '';
-    
-    if (field.hasAttribute('required') && !value) {
-        isValid = false;
-        message = 'هذا الحقل مطلوب';
-    } else if (field.type === 'email' && value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            isValid = false;
-            message = 'يرجى إدخال بريد إلكتروني صحيح';
-        }
-    } else if (field.type === 'tel' && value) {
-        const phoneRegex = /^[\+]?[\d\s\-\(\)]{8,}$/;
-        if (!phoneRegex.test(value)) {
-            isValid = false;
-            message = 'يرجى إدخال رقم هاتف صحيح';
-        }
-    }
-    
-    if (!isValid) {
-        showFieldError(field, message);
-    }
-    
-    return isValid;
-}
-
-function clearValidation(e) {
-    const field = e.target;
-    const errorElement = field.parentNode.querySelector('.field-error');
-    if (errorElement) {
-        errorElement.remove();
-    }
-    field.style.borderColor = '';
-}
-
-function showFieldError(field, message) {
-    field.style.borderColor = 'var(--danger-color)';
-    
-    const errorElement = document.createElement('div');
-    errorElement.className = 'field-error';
-    errorElement.textContent = message;
-    errorElement.style.cssText = `
-        color: var(--danger-color);
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-        display: block;
-    `;
-    
-    field.parentNode.appendChild(errorElement);
-}
-
-// Notification system
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--success-color)' : type === 'error' ? 'var(--danger-color)' : 'var(--primary-color)'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow-lg);
-        z-index: 10000;
-        transform: translateX(400px);
-        transition: var(--transition);
-        max-width: 400px;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Auto remove
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
+    handleFormSubmit(form) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        
+        // محاكاة إرسال النموذج
+        this.showLoadingState(form);
+        
         setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 5000);
-}
+            this.showSuccessMessage(form);
+            this.trackConversion('form_submit');
+        }, 2000);
+    }
 
-// Enhanced Loading screen with progress
-function initializeLoadingScreen() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    if (!loadingScreen) return;
-    
-    // Simulate loading progress
-    const progressBar = loadingScreen.querySelector('.loading-progress');
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-            
-            // Hide loading screen after completion
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    if (loadingScreen.parentNode) {
-                        loadingScreen.parentNode.removeChild(loadingScreen);
-                    }
-                }, 500);
-            }, 500);
+    showLoadingState(form) {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'جاري الإرسال...';
+        submitBtn.disabled = true;
+        
+        setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }, 3000);
+    }
+
+    showSuccessMessage(form) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.innerHTML = `
+            <div style="background: #4CAF50; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                ✅ تم إرسال رسالتك بنجاح! سنتواصل معك خلال 30 دقيقة.
+            </div>
+        `;
+        
+        form.parentElement.insertBefore(successDiv, form.nextSibling);
+        
+        setTimeout(() => {
+            successDiv.remove();
+        }, 5000);
+    }
+
+    trackConversion(action) {
+        // تتبع التحويلات (يمكن دمجه مع Google Analytics أو Facebook Pixel)
+        console.log(`Conversion tracked: ${action} at ${new Date().toISOString()}`);
+        
+        // إرسال البيانات إلى نظام التحليلات
+        if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+                event_category: 'engagement',
+                event_label: 'ai_assistant_landing',
+                value: 1
+            });
         }
-        progressBar.style.width = progress + '%';
-    }, 100);
+    }
 }
 
-// Initialize enhanced loading screen
-document.addEventListener('DOMContentLoaded', function() {
-    initializeLoadingScreen();
-    // ...existing code...
+// ========================================
+// SCROLL ANIMATIONS
+// ========================================
+class ScrollAnimations {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupIntersectionObserver();
+        this.setupScrollProgress();
+        this.setupSmoothScrolling();
+    }
+
+    setupIntersectionObserver() {
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // مراقبة العناصر للرسوم المتحركة
+        document.querySelectorAll('.feature-card, .service-card, .benefit-card, .step-card').forEach(el => {
+            animationObserver.observe(el);
+        });
+    }
+
+    setupScrollProgress() {
+        const progressBar = document.createElement('div');
+        progressBar.className = 'scroll-progress';
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            z-index: 10000;
+            transition: width 0.3s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+        });
+    }
+
+    setupSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+}
+
+// ========================================
+// APP INITIALIZATION
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+    // تهيئة التطبيق
+    const loadingScreen = new LoadingScreen();
+    
+    // انتظار انتهاء التحميل قبل تهيئة باقي المكونات
+    setTimeout(() => {
+        // تهيئة جميع المكونات
+        const successCounter = new SuccessCounter();
+        const testimonialsCarousel = new TestimonialsCarousel();
+        const interactiveDemo = new InteractiveDemo();
+        const statsDashboard = new StatsDashboard();
+        const aiChatWidget = new AIChatWidget();
+        const advancedUIEffects = new AdvancedUIEffects();
+        const contactFormHandler = new ContactFormHandler();
+        const scrollAnimations = new ScrollAnimations();
+        
+        // إضافة الرسوم المتحركة للعناصر
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-in {
+                animation: slideInUp 0.8s ease forwards;
+            }
+            
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        console.log('🚀 تم تحميل جميع المكونات بنجاح!');
+    }, 3000);
 });
 
-// Scroll to top functionality
-function initializeScrollToTop() {
-    const scrollToTopBtn = document.createElement('button');
-    scrollToTopBtn.className = 'scroll-to-top';
-    scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    scrollToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        background: var(--gradient-primary);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 1.2rem;
-        opacity: 0;
-        visibility: hidden;
-        transition: var(--transition);
-        z-index: 1000;
-        box-shadow: var(--shadow-lg);
-    `;
-    
-    document.body.appendChild(scrollToTopBtn);
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 500) {
-            scrollToTopBtn.style.opacity = '1';
-            scrollToTopBtn.style.visibility = 'visible';
-        } else {
-            scrollToTopBtn.style.opacity = '0';
-            scrollToTopBtn.style.visibility = 'hidden';
-        }
-    });
-    
-    scrollToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// Smooth scrolling for navigation links
-function initializeSmoothScrolling() {
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-    
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
-            
-            if (targetSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = targetSection.offsetTop - headerHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-}
-
-// Parallax effects
-function initializeParallaxEffects() {
-    const parallaxElements = document.querySelectorAll('.hero, .final-result');
-    
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        
-        parallaxElements.forEach(element => {
-            const rate = scrolled * -0.5;
-            element.style.transform = `translateY(${rate}px)`;
-        });
-    });
-}
-
-// WhatsApp integration
-function initializeWhatsAppIntegration() {
-    // Add WhatsApp floating button
-    const whatsappBtn = document.createElement('a');
-    whatsappBtn.href = 'https://wa.me/96170106083?text=مرحباً، أريد معرفة المزيد عن خدمات Dr. Scent AI';
-    whatsappBtn.target = '_blank';
-    whatsappBtn.className = 'whatsapp-float';
-    whatsappBtn.innerHTML = '<i class="fab fa-whatsapp"></i>';
-    whatsappBtn.style.cssText = `
-        position: fixed;
-        bottom: 100px;
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        background: var(--whatsapp-green);
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.8rem;
-        text-decoration: none;
-        box-shadow: var(--shadow-lg);
-        z-index: 1000;
-        transition: var(--transition);
-        animation: pulse-whatsapp 2s infinite;
-    `;
-    
-    document.body.appendChild(whatsappBtn);
-    
-    // Add pulse animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes pulse-whatsapp {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-            }
-        }
-        
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background: #128c7e;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Initialize WhatsApp integration
-initializeWhatsAppIntegration();
-
-// Analytics and tracking (placeholder)
-function initializeAnalytics() {
-    // Track page views
-    console.log('Page viewed: Dr. Scent AI Presentation');
-    
-    // Track button clicks
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const buttonText = this.textContent.trim();
-            console.log(`Button clicked: ${buttonText}`);
-        });
-    });
-    
-    // Track section views
-    const sections = document.querySelectorAll('section[id]');
-    const sectionObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                console.log(`Section viewed: ${entry.target.id}`);
-            }
-        });
-    }, { threshold: 0.5 });
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-}
-
-// Initialize analytics
-initializeAnalytics();
-
-// Performance optimization
-function optimizePerformance() {
-    // Lazy load images
-    const images = document.querySelectorAll('img[data-src]');
-    const imageObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                imageObserver.unobserve(img);
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-    
-    // Preload critical resources
-    const criticalResources = [
-        'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
-    ];
-    
-    criticalResources.forEach(resource => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = resource;
-        link.as = 'style';
-        document.head.appendChild(link);
-    });
-}
-
-// Initialize performance optimizations
-optimizePerformance();
-
-// Error handling
-window.addEventListener('error', function(e) {
-    console.error('JavaScript Error:', e.message, 'at', e.filename, ':', e.lineno);
-});
-
-// Service Worker registration (for PWA capabilities)
+// ========================================
+// SERVICE WORKER FOR PWA
+// ========================================
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
+    window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('ServiceWorker registration successful');
+            .then(registration => {
+                console.log('SW registered: ', registration);
             })
-            .catch(function(err) {
-                console.log('ServiceWorker registration failed');
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
             });
     });
 }
-
-// Export functions for external use
-window.DrScentAI = {
-    showNotification,
-    animateCounter,
-    validateField
-};
-
-// Print functionality
-function setupPrintStyles() {
-    const printBtn = document.createElement('button');
-    printBtn.className = 'print-btn';
-    printBtn.innerHTML = '<i class="fas fa-print"></i> طباعة العرض';
-    printBtn.style.cssText = `
-        position: fixed;
-        top: 100px;
-        left: 20px;
-        background: var(--gradient-secondary);
-        color: white;
-        border: none;
-        padding: 0.8rem 1.2rem;
-        border-radius: var(--border-radius);
-        cursor: pointer;
-        font-size: 0.9rem;
-        z-index: 1000;
-        box-shadow: var(--shadow-md);
-        transition: var(--transition);
-        display: none;
-    `;
-    
-    document.body.appendChild(printBtn);
-    
-    // Show print button on larger screens
-    if (window.innerWidth > 768) {
-        printBtn.style.display = 'block';
-    }
-    
-    printBtn.addEventListener('click', function() {
-        window.print();
-    });
-}
-
-setupPrintStyles();
-
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    // Press 'P' to print
-    if (e.key === 'p' || e.key === 'P') {
-        if (e.ctrlKey || e.metaKey) {
-            // Let default print work
-            return;
-        }
-        e.preventDefault();
-        window.print();
-    }
-    
-    // Press 'Escape' to close mobile menu
-    if (e.key === 'Escape') {
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        if (hamburger && hamburger.classList.contains('active')) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    }
-});
-
-// Dynamic copyright year
-function updateCopyrightYear() {
-    const copyrightElements = document.querySelectorAll('.footer-bottom p');
-    copyrightElements.forEach(element => {
-        if (element.textContent.includes('2025')) {
-            const currentYear = new Date().getFullYear();
-            element.textContent = element.textContent.replace('2025', currentYear);
-        }
-    });
-}
-
-updateCopyrightYear();
-
-console.log('🚀 Dr. Scent AI Presentation Website Loaded Successfully!');
-console.log('💼 Powered by HMZ Technology');
-console.log('📱 Contact: +96170106083');
-console.log('📧 Email: hasanalzein2024@gmail.com');
