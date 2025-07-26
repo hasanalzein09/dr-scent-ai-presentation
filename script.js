@@ -301,24 +301,39 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Loading screen
+// Enhanced Loading screen with progress
 function initializeLoadingScreen() {
-    const loading = document.createElement('div');
-    loading.className = 'loading';
-    loading.innerHTML = '<div class="spinner"></div>';
-    document.body.prepend(loading);
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (!loadingScreen) return;
     
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loading.classList.add('hidden');
+    // Simulate loading progress
+    const progressBar = loadingScreen.querySelector('.loading-progress');
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            
+            // Hide loading screen after completion
             setTimeout(() => {
-                if (loading.parentNode) {
-                    loading.parentNode.removeChild(loading);
-                }
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    if (loadingScreen.parentNode) {
+                        loadingScreen.parentNode.removeChild(loadingScreen);
+                    }
+                }, 500);
             }, 500);
-        }, 1000);
-    });
+        }
+        progressBar.style.width = progress + '%';
+    }, 100);
 }
+
+// Initialize enhanced loading screen
+document.addEventListener('DOMContentLoaded', function() {
+    initializeLoadingScreen();
+    // ...existing code...
+});
 
 // Scroll to top functionality
 function initializeScrollToTop() {
